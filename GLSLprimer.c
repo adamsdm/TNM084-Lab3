@@ -63,7 +63,7 @@
 
 // File names for a mesh model, a texture file and the two shaders
 #define TEXTUREFILENAME PATH "textures/earth2048.tga"
-#define MESHFILENAME PATH "meshes/teapot.obj"
+#define MESHFILENAME PATH "meshes/trex.obj"
 #define VERTEXSHADERFILENAME PATH "vertexshader.glsl"
 #define FRAGMENTSHADERFILENAME PATH "fragmentshader.glsl"
 

@@ -6,7 +6,6 @@ uniform sampler2D tex;
 in vec3 interpolatedNormal;
 in vec2 st;
 in float noise;
-
 out vec4 color;
 
 //
@@ -189,21 +188,24 @@ float pnoise(vec3 P, vec3 rep)
 
 
 void main() {
-	vec3 brightYellow = vec3(1.0, 1.0, 1.0).rgb; // bright yellow color
+	vec3 brightYellow = vec3(1.0, 0.8, 0.0).rgb; // bright yellow color
 	vec3 orange = vec3(0.7, 0.42, 0.0).rgb;  // darker yellow color
 	vec3 black = vec3(0.0, 0.0, 0.0);
 	
-	float surfaceNoiseLF = pnoise(interpolatedNormal*4 + vec3(0.2, 0.13, 0.33)*time, vec3(100));
-	float surfaceNoiseHF = pnoise(interpolatedNormal*30 + vec3(0.2, 0.13, 0.33)*time, vec3(100));
+	float surfaceNoiseLF = 1.00 * pnoise(interpolatedNormal*4 + vec3(0.2, 0.13, 0.33)*time, vec3(100));
+	float surfaceNoiseMF = 0.50 * pnoise(interpolatedNormal*30 + vec3(0.2, 0.13, 0.33)*time, vec3(100));
+	float surfaceNoiseHF = 0.25 * pnoise(interpolatedNormal*40 + vec3(0.2, 0.13, 0.33)*time, vec3(100));
 	
 	
 	vec3 nNormal = normalize(interpolatedNormal);
 	
 	vec3 surfaceColor = orange;
-	//surfaceColor = mix(surfaceColor, brightYellow, max(0.01, noise)); 	//Color peaks
-	surfaceColor = mix(surfaceColor, black, surfaceNoiseLF);			// Low freq noise
-	surfaceColor = mix(surfaceColor, black, surfaceNoiseHF);			// High freq noise
+	surfaceColor = mix(surfaceColor, black, surfaceNoiseLF);								// Low freq noise
+	surfaceColor = mix(surfaceColor, black, surfaceNoiseMF);								// Medium freq noise
+	surfaceColor = mix(surfaceColor, black, surfaceNoiseHF);								// High freq noise
 	
+	surfaceColor = mix(surfaceColor, brightYellow, smoothstep(0.1, 0.15, noise)); 			//Color peaks
+
 
 	color = vec4(surfaceColor, 1.0);
 	

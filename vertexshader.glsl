@@ -14,7 +14,6 @@ out vec3 interpolatedNormal;
 out vec2 st;
 out float noise;
 
-
 //
 // GLSL textureless classic 3D noise "cnoise",
 // with an RSL-style periodic variant "pnoise".
@@ -196,7 +195,7 @@ float pnoise(vec3 P, vec3 rep)
 
 void main(){
 
-    noise = pnoise(10*Position + vec3(0.2, 0.13, 0.33)*time, vec3(10))-0.5;
+    noise = pnoise(2*Position + vec3(0.2, 0.13, 0.33)*time, vec3(10))-0.5;
 	noise = max(noise, 0.1);
 	
     vec3 newPosition = Position + Normal * 0.5*noise;

@@ -196,10 +196,11 @@ float pnoise(vec3 P, vec3 rep)
 
 void main(){
 
-    noise = 0.8*pnoise(Position + vec3(0.2, 0.13, 0.33)*time, vec3(10));
-
-    vec3 newPosition = Position + Normal * noise;
-
+    noise = pnoise(10*Position + vec3(0.2, 0.13, 0.33)*time, vec3(10))-0.5;
+	noise = max(noise, 0.1);
+	
+    vec3 newPosition = Position + Normal * 0.5*noise;
+	
 	vec3 pos = newPosition;
 
 	gl_Position = (P * MV) * vec4(pos, 1.0);
